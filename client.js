@@ -5,20 +5,47 @@ const appPath = process.argv[1];
 const count = process.argv[2];
 const type = process.argv[3];
 
-const url = '127.0.0.1';
-let answer = '';
+const url = 'http://127.0.0.1:3000';
 
-//осталось понять как серверу обрабатывать последовательно или параллельно
-for (let i = 0; i < count; i++) {
-    request(
-        {
-            method: 'GET',
+if (type === 'normal') {
+    for (let i = 0; i < count; i++) {
+        request({
             url: url,
-            type: type,
-        },
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                answer = body;
+            headers: {
+                count: i
+            }
+        }, (err, response, body) => {
+            if (err) {
+                console.error('Error', err)
+            }
+            if (response.statusCode == 200) {
+                console.log(body)
             }
         })
+    }
+}
+if (type === 'async') {
+    async function f() {
+        for (let i = 0; i < count; i++) {
+            let promise = new Promise((resolve, reject) => {
+                request({
+                    url: url,
+                    headers: {
+                        count: i
+                    }
+                }, (err, response, body) => {
+                    if (err) {
+                        console.error('Error', err)
+                    }
+                    if (response.statusCode == 200) {
+                        resolve(body)
+                    }
+                })
+            });
+            let result = await promise;
+            console.log(result)
+        }
+    }
+
+    f();
 }
