@@ -19,19 +19,24 @@ class App extends LitElement {
   constructor() {
     super();
     this.data = {
-      "id": 1,
+      "id1": 1,
+      "id2": 2,
+      "id3": 3,
       "items": [{
-        "id": 2,
+        "id1": 1,
+        "id2": 2,
         "items": [{
-          "id": 3
+          "id1": 1,
+          "id2": 2
         }]
-      }]
+      }],
+      "id4": 4,
     }
   }
   render() {
     return html`
       <p>Hello ${this.message}</p>
-      <my-tree data=${['a',1]}></my-tree>
+      <my-tree .data=${this.data}></my-tree>
     `;
   }
 }

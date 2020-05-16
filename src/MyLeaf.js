@@ -1,15 +1,14 @@
 import { LitElement, html } from "@polymer/lit-element";
 
 
-// export class MyLeaf extends LitElement {
-//     static properties = {
-//       message: { type: Array }
-//     };
+export class MyLeaf extends LitElement {
+    static properties = {
+      value: { type: String }
+    };
   
-//     render() {
-//       return html`
-//       <li>1234
-//       </li>
-//       `;
-//     }
-//   }
+    render() {
+      return html`
+      <li>${this.value}</li>
+      `;
+    }
+  }
